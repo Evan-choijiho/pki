@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProfile name="dev">
+        <property name="LOG_BASE_PATH" value="/Users/jihoon/developer/SmartSpaceManager/log" />
+    </springProfile>
+    <springProfile name="stg">
+        <property name="LOG_BASE_PATH" value="/var/log/ssm" />
+    </springProfile>
+    <springProfile name="prod">
+        <property name="LOG_BASE_PATH" value="/var/log/ssm"/>
+    </springProfile>
+
+
+    <appender name="ACCESS_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BASE_PATH}/access.%d{yyyy-MM}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="SYSTEM_LOG_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <prudent>true</prudent>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_BASE_PATH}/system.%d{yyyy-MM-dd}.log</fileNamePattern>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</Pattern>
+        </layout>
+    </appender>
+
+
+    <springProfile name="dev">
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+
+    <springProfile name="stg">
+        <logger name="access" additivity="false" level="DEBUG">
+            <appender-ref ref="ACCESS_LOG_FILE" />
+            <appender-ref ref="SYSTEM_LOG_FILE" />
+        </logger>
+        <logger name="system" additivity="false" level="DEBUG">
+            <appender-ref ref="SYSTEM_LOG_FILE" />
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+
+    <springProfile name="prod">
+        <logger name="access" additivity="false" level="INFO">
+            <appender-ref ref="ACCESS_LOG_FILE" />
+            <appender-ref ref="SYSTEM_LOG_FILE" />
+        </logger>
+        <logger name="system" additivity="false" level="INFO">
+            <appender-ref ref="SYSTEM_LOG_FILE" />
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="STDOUT" />
+        </root>
+    </springProfile>
+
+</configuration>

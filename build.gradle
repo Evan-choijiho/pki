@@ -1,0 +1,57 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.1.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.peloton'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation("javax.xml.bind:jaxb-api:2.3.1")  		 // JAXB API 추가
+	implementation("org.glassfish.jaxb:jaxb-runtime:2.3.1")  // JAXB 런타임 추가 (선택 사항)
+
+
+	// jpa + jdbc
+	implementation 'mysql:mysql-connector-java:8.0.28'
+	implementation 'com.vladmihalcea:hibernate-types-55:2.14.0'	// json type column support
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0' // sql statement log print
+	implementation 'org.qlrm:qlrm:2.0.2' // QLRM (createNativQuery 용도)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'	// Request @Valid working
+
+	// swagger
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+	// lombok + mapstruct
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+	implementation 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
+	// etc
+	implementation 'io.jsonwebtoken:jjwt:0.9.1' // JWT Token
+
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
