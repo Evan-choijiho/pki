@@ -1,9 +1,7 @@
 package com.peloton.boilerplate.log;
 
-
 import com.peloton.boilerplate.util.WebLogUtils;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.Getter;
 import lombok.Setter;
 import java.util.Collections;
@@ -37,23 +35,7 @@ public class AccessLog extends UserActivityLog {
         this.method = request.getMethod();
         this.status = 0;
         this.error = 0;
-        this.authToken = request.getHeader("X-Auth-Token");
-        this.headers = this.getHeaderMap(request);
-        this.params = this.getParamMap(request);
-        this.rt = WebLogUtils.getTxResponseTime();
-        this.body = body;
-    }
-
-    public AccessLog(HttpServletRequest request, HttpServletResponse response, Type type, int errorCode, Object body) {
-        super("access_log");
-
-        this.type = type;
-        this.path = request	.getRequestURI()
-                .replaceAll("/+", "/");
-        this.method = request.getMethod();
-        this.status = response.getStatus();
-        this.error = errorCode;
-        this.authToken = request.getHeader("X-Auth-Token");
+        this.authToken = request.getHeader("x-member-access-token");
         this.headers = this.getHeaderMap(request);
         this.params = this.getParamMap(request);
         this.rt = WebLogUtils.getTxResponseTime();

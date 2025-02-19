@@ -60,6 +60,7 @@ public class ServiceException extends RuntimeException {
         Expired, // 만료
         InvalidDataType, // 잘못된 데이터 타입
         EntityNotFound, // 존재하지 않음
+        RequestPathNotFound,    // 존재하지 않은 URL 패턴
         EntityDuplicated, // 이미 존재하고 있음
         NotSuitableStatus, // application status, loanapply status가 적합하지 않음
         NotOperable, // bank나 product가 운영 가능하지 않음

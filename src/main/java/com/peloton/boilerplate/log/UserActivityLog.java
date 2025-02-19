@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserActivityLog extends ActivityLog {
+
     protected Long userSid = WebLogUtils.getAuthUserSid();
     protected String userIp = WebLogUtils.getRequestIp();
 

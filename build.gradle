@@ -19,33 +19,34 @@ repositories {
 
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation("javax.xml.bind:jaxb-api:2.3.1")  		 // JAXB API 추가
-	implementation("org.glassfish.jaxb:jaxb-runtime:2.3.1")  // JAXB 런타임 추가 (선택 사항)
 
+	// boot 구동 기본 Lib
+	implementation 'org.springframework.boot:spring-boot-starter-web'		// boot 기본 Lib
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'	// Spring Boot에서 JUnit 기반 테스트
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'			// JUnit 플랫폼을 실행 런처
+	implementation("javax.xml.bind:jaxb-api:2.3.1")  		 // XML 데이터를 Java 객체로 변환 ( Java9 부터 기본 lib 에서 제거되어 추가 )
+	implementation("org.glassfish.jaxb:jaxb-runtime:2.3.1")  // jaxb 런타임 추가
 
 	// jpa + jdbc
-	implementation 'mysql:mysql-connector-java:8.0.28'
-	implementation 'com.vladmihalcea:hibernate-types-55:2.14.0'	// json type column support
-	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0' // sql statement log print
-	implementation 'org.qlrm:qlrm:2.0.2' // QLRM (createNativQuery 용도)
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'	// Request @Valid working
+	implementation 'mysql:mysql-connector-java:8.0.28'							// MySQL DB 커넥션 JDBC 드라이버
+	implementation 'com.vladmihalcea:hibernate-types-55:2.14.0'					// json type column support
+	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.0' 	// sql statement log print ( sql 로그 가독성 )
+	implementation 'org.qlrm:qlrm:2.0.2' 										// QLRM (createNativQuery 용도)
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'		// Spring Data JPA 지
+	implementation 'org.springframework.boot:spring-boot-starter-validation'	// DTO 의 @Valid working
 
 	// swagger
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
 	// lombok + mapstruct
-	implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-	implementation 'org.projectlombok:lombok:1.18.22'
-	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-	annotationProcessor 'org.projectlombok:lombok:1.18.22'
-	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+	implementation 'org.mapstruct:mapstruct:1.4.2.Final'						// DTO ↔ Entity 변환을 자동으로 생성 ( @Mapper )
+	implementation 'org.projectlombok:lombok:1.18.22'							// @Data, @Getter, @Setter, @NoArgsConstructor .. 자동생성
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'			// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'						// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
+	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'		// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
 
-	// etc
-	implementation 'io.jsonwebtoken:jjwt:0.9.1' // JWT Token
+	// jwt
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'

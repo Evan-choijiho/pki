@@ -25,15 +25,11 @@ public class AuthServiceConfig {
 
     public PathPermission.Role getPathRole(String path, String method) {
         for (PathPermission pathPermission : pathPermissionList.getList()) {
-            if (pathPermission	.getPathPattern()
-                    .matcher(path)
-                    .matches()) {
-                if (pathPermission	.getMethod()
-                        .equals("ALL")) {// mathod is 'ALL'
+            if (pathPermission.getPathPattern().matcher(path).matches()) {      // path is matched
+                if (pathPermission.getMethod().equals("ALL")) {
                     return pathPermission.getRole();
                 } else {
-                    if (pathPermission	.getMethod()
-                            .equals(method)) { // mathod is matched
+                    if (pathPermission.getMethod().equals(method)) {    // method is matched
                         return pathPermission.getRole();
                     }
                 }

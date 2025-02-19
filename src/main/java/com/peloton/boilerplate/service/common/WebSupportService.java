@@ -1,4 +1,4 @@
-package com.peloton.boilerplate.service;
+package com.peloton.boilerplate.service.common;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;

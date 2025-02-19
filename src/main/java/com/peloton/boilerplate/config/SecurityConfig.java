@@ -17,19 +17,13 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .cors(cors -> Customizer.withDefaults())  // CORS 활성화
+                .cors(cors -> cors.disable())             // cors 방지
                 .csrf(csrf -> csrf.disable())             // CSRF 보호 비활성화 (API 개발 시)
-                .authorizeHttpRequests(auth -> auth
-                            .anyRequest().permitAll()  // 그 외 요청은 인증 필요
-//                        .requestMatchers("/public/**", "/swagger-ui/**", "/v3/api-docs/**").permitAll()  // Swagger 및 공용 API 허용
-//                        .anyRequest().authenticated()  // 그 외 요청은 인증 필요
-                )
-                .formLogin(login -> login.disable())  // 기본 로그인 폼 활성화
-                .httpBasic(basic -> basic.disable());   // HTTP Basic 인증 비활성화
-
+                .formLogin(login -> login.disable())      // 기본 로그인 폼 비활성화
+                .httpBasic(basic -> basic.disable());     // HTTP Basic 인증 비활성화 ( ID, Pass 기반 아닌 JWT 사용 )
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }
+    public PasswordEncoder passwordEncoder() { return new BCryptPasswordEncoder(); }    // ID, Pass 로그인 단방향 암호화
 }

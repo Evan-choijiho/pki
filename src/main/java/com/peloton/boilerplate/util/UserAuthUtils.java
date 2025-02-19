@@ -3,9 +3,7 @@ package com.peloton.boilerplate.util;
 import com.peloton.boilerplate.exception.*;
 import com.peloton.boilerplate.model.dto.external.MemberInfoDto;
 import io.jsonwebtoken.*;
-import lombok.NonNull;
 import org.springframework.util.StringUtils;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,7 +40,6 @@ public class UserAuthUtils {
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("userId", userId);
         claimsMap.put("userSid", userSid);
-        //claimsMap.put("companySid", companySid);
         return createToken(claimsMap, TokenType.refresh_token);
     }
 
@@ -50,7 +47,6 @@ public class UserAuthUtils {
         Map<String, Object> claimsMap = new HashMap<>();
         claimsMap.put("userId", userId);
         claimsMap.put("userSid", userSid);
-        //claimsMap.put("companySid", companySid);
         return createToken(claimsMap, TokenType.access_token);
     }
 
@@ -96,7 +92,7 @@ public class UserAuthUtils {
     }
 
     protected static Claims getTokenClaims(String token, TokenType tokenType) {
-        if (StringUtils.isEmpty(token) || StringUtils.isEmpty(tokenType.secretKey)) {
+        if (!StringUtils.hasText(token) || !StringUtils.hasText(tokenType.secretKey)) {
             throw new ClientRequestInputMissingException(ServiceException.ErrorType.ClientSystem, tokenType.errorType, null);
         } else {
             try {
@@ -112,29 +108,4 @@ public class UserAuthUtils {
         }
     }
 
-    protected final static ThreadLocal<Long> authUserIdThreadLocal = new ThreadLocal<Long>();
-
-    public static void checkAdminMemberPermission() {
-        @NonNull
-        final Long authMemberSid = WebLogUtils.getAuthUserSid();
-
-        if (authMemberSid.longValue() == ServiceUtils.adminUserSid) { // admin
-            return;
-        } else { // no matched target user
-            throw new AuthenticationFailedException(ServiceException.ErrorTarget.AccessToken, null);
-        }
-    }
-
-    public static void checkAuthMemberPermission(@NonNull Long targetUserSid) {
-        @NonNull
-        final Long authUserSid = WebLogUtils.getAuthUserSid();
-
-        if (authUserSid.longValue() == ServiceUtils.adminUserSid) { // admin
-            return;
-        } else if (authUserSid.longValue() == targetUserSid.longValue()) { // member
-            return;
-        } else { // no matched target member
-            throw new AuthenticationFailedException(ServiceException.ErrorTarget.AccessToken, null);
-        }
-    }
 }

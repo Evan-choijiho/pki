@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 
-    <springProfile name="dev">
-        <property name="LOG_BASE_PATH" value="/Users/jihoon/developer/SmartSpaceManager/log" />
-    </springProfile>
     <springProfile name="stg">
         <property name="LOG_BASE_PATH" value="/var/log/ssm" />
     </springProfile>

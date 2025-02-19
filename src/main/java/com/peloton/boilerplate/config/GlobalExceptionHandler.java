@@ -3,7 +3,7 @@ package com.peloton.boilerplate.config;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.peloton.boilerplate.exception.*;
-import com.peloton.boilerplate.service.WebSupportService;
+import com.peloton.boilerplate.service.common.WebSupportService;
 import com.peloton.boilerplate.util.WebLogUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -33,13 +33,12 @@ public class GlobalExceptionHandler {
     private WebSupportService webSupportService;
 
 
-//    private final SlackService slackService; // Slack 알림 서비스
+//    private final SlackService slackService; // Exception 시, Slack 알림 서비스
 //    public GlobalExceptionHandler(SlackService slackService) {
 //        this.slackService = slackService;
 //    }
 
-
-    // URL이 Mapping 정의되어 있지 않은 요청일 경우 Handler를 따로 등록 해주어야 한다.
+    // URL이 정의 되어 있지 않은 요청일 경우 Handler 등
     // 설정 추가 필요 (application.properties)
     // spring.mvc.throw-exception-if-no-handler-found=true
     // spring.web.resources.add-mappings=false

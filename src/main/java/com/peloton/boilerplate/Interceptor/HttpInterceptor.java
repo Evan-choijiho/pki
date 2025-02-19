@@ -4,6 +4,7 @@ import com.peloton.boilerplate.auth.AuthService;
 import com.peloton.boilerplate.util.WebLogUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.event.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -16,21 +17,18 @@ public class HttpInterceptor implements HandlerInterceptor {
     AuthService authService;
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {//        final String uriPath = request.getRequestURI();
-
-        //System.out.println("######### HttpInterceptor preHandle");
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         final String uriPath = request.getRequestURI();
-        if (WebLogUtils.isServicePath(uriPath)) {   // service url filtering ( /api/project명/* )
+        if ( WebLogUtils.isServicePath(uriPath) ) {
             WebLogUtils.setThreadLocalsFromHttpHeader(request);
 
-            if (request.getInputStream() == null || request	.getInputStream()
-                    .available() == 0) {    // Body = empty
+            if (request.getInputStream() == null || request	.getInputStream().available() == 0) {
                 WebLogUtils.writeAccessRequestLog(request, true, null);
             }
 
-            // Authentication
-            //authService.authAndCheckPermission(request);
+            // Authentication ( JWT 유효성 Check )
+            authService.authAndCheckPermission(request);
         }
         return true;
 
@@ -41,8 +39,6 @@ public class HttpInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-//        WebLogUtils.removeAllThreadLocals();
-    }
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception { WebLogUtils.removeAllThreadLocals(); }
 
 }

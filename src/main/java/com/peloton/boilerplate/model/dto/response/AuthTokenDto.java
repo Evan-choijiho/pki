@@ -42,6 +42,6 @@ public class AuthTokenDto {
     @Schema(name = "최초 로그인 여부", required = false, example = "true/false")
     private Boolean firstLogin;
 
-    @Schema(name = "로그인 권한", required = false, example = "admin/normal")
-    private User.Grant grant;
+//    @Schema(name = "로그인 권한", required = false, example = "admin/normal")
+//    private User.Grant grant;
 }
