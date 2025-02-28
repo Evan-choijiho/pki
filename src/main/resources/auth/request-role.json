@@ -2,6 +2,7 @@
   "list":[
     {"path": "/[^/]+/[^/]+/[^ ]+", "method": "OPTIONS", "role": "WEB"},
     {"path": "/api/test/[^ ]+", "method": "ALL", "role": "VISITOR"},
-    {"path": "/api/access/[^ ]+", "method": "ALL", "role": "USER"}
+    {"path": "/api/access/[^ ]+", "method": "ALL", "role": "VISITOR"},
+    {"path": "/api/user/[^ ]+", "method": "ALL", "role": "USER"}
   ]
 }
