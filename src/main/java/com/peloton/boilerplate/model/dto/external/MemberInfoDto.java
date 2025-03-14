@@ -24,8 +24,18 @@ import java.util.Map;
 @Schema(description = "회원 정보 DTO - 회원 가입 정보 기입용")
 public class MemberInfoDto implements Serializable {
 
+    @Schema(description = "회원명", required = false, example = "정희")
+    private String name;
+
+    @Schema(description = "회원 휴대폰번호 ('-' 없이 숫자만)", required = false, example = "01012345678")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String phoneNumber;
+
     @Schema(description = "출생년도 (4자리: yyyy)", required = false, example = "1965")
     private Integer birthYear;
+
+    @Schema(description = "생일 (3 or 4자리: MMdd)", required = false, example = "1209 or 414")
+    private Integer birthDay;
 
     @Schema(description = "성별 (1:남자, 2:여자)", required = false, example = "1")
     private Integer gender;

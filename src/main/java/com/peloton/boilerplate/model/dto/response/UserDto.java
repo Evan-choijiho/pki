@@ -2,17 +2,25 @@ package com.peloton.boilerplate.model.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.peloton.boilerplate.model.dto.common.BaseUpdatableDto;
+import com.peloton.boilerplate.model.dto.common.GenericMapper;
 import com.peloton.boilerplate.model.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 @Data
 @SuperBuilder
 @AllArgsConstructor
 @Schema(description = "사용자 정보 DTO")
 public class UserDto extends BaseUpdatableDto {
+    @Mapper(componentModel = "spring")
+    public static interface UserMapper extends GenericMapper<UserDto, User> {
+        UserMapper instance = Mappers.getMapper(UserMapper.class);
+    }
+
     @Schema(description = "사용자 id", required = false, example = "hansener")
     private String userId;
     @Schema(description = "사용자명", required = false, example = "지훈")
