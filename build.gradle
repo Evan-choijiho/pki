@@ -44,8 +44,8 @@ dependencies {
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'			// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'						// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'		// MapStruct와 Lombok을 함께 사용 ( MapStruct가 Lombok의 Getter/Setter를 인식 )
-
-	// jwt
+	implementation 'org.bouncycastle:bcprov-jdk18on:1.77'
+	implementation 'org.bouncycastle:bcpkix-jdk18on:1.77'	// jwt
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
 	// spring security

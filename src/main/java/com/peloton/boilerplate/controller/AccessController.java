@@ -25,6 +25,13 @@ public class AccessController {
     @Autowired
     AccessService accessService;
 
+    @Operation(summary = "Hello API", description = "helloworld 문자열을 반환합니다.")
+    @GetMapping("/hello")
+    @ResponseStatus(value = HttpStatus.OK)
+    public String hello() {
+        return "helloworld";
+    }
+
     @Operation(
             summary = "사용자 상세 정보 조회 (by sid)", description = "사용자 상세 정보 조회 (by sid)",
             parameters = { @Parameter(name = "X-Member-Access-Token", description = "사용자 AccessToken - 로그인 시 발급",

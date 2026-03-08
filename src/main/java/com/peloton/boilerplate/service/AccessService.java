@@ -15,10 +15,13 @@ public class AccessService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
+    @Autowired(required = false)
     UserRepository userRepository;
 
     public UserDto getUserBySid(Long userSid) {
+        if (userRepository == null) {
+            throw new UnsupportedOperationException("DB is not configured. Enable DataSource/JPA to use this API.");
+        }
         User user = userRepository	.findBySidAndDeleteTimeIsNull(userSid);
         UserDto userDto = new UserDto(user);
         return userDto;
@@ -26,6 +29,9 @@ public class AccessService {
 
     @Transactional
     public AuthTokenDto registUser(SignUpDto signUpDto) {
+        if (userRepository == null) {
+            throw new UnsupportedOperationException("DB is not configured. Enable DataSource/JPA to use this API.");
+        }
         // 비밀번호 암호화
         String password = passwordEncoder.encode(signUpDto.getPassword());
 

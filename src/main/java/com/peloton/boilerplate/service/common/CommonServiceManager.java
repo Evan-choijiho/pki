@@ -21,10 +21,13 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CommonServiceManager {
 
-    @Autowired
+    @Autowired(required = false)
     UserRepository userRepository;
 
     public UserDto getUserByPhoneNumber(String phoneNumber) {
+        if (userRepository == null) {
+            throw new UnsupportedOperationException("DB is not configured. Enable DataSource/JPA to use this API.");
+        }
         User user = userRepository.findBySidAndDeleteTimeIsNull(200000L);
         UserDto userDto = UserDto.UserMapper.instance.toDto(user);
         return userDto;
